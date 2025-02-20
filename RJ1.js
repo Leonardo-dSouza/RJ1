@@ -217,7 +217,7 @@ for (const personagem of personagens) {
 }
 
 function exibirCampeao(titulo, personagem, atributo) {
-    console.log(` O personagem com a maior ${titulo} é ${personagem.nome}, com incríveis ${personagem[atributo]} de ${titulo}!`);
+    console.log(` O personagem com a maior ${titulo} é ${personagem.nome}, com incríveis ${personagem[atributo]} de ${titulo}`);
 }
 
 
