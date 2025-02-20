@@ -187,9 +187,12 @@ const thanos = {
 const personagens = [capitaoAmerica, homemAranha, doutorEstranho, viuvaNegra, gaviaoArqueiro, hulk, homemDeFerro, thor, thanos]
 
 
-let maisRapido = personagens[0];
-let maisForte = personagens[0];
-let maisResistente = personagens[0];
+
+let maisRapido = personagens[0]
+let maisForte = personagens[0]
+let maisResistente = personagens[0]
+let nomeOveral = ''
+let maisPontosTotais = 0
 
 // for(let x in personagens){
 //     maisRapido = personagens[x].nome
@@ -200,32 +203,43 @@ let maisResistente = personagens[0];
 
 
 for (const personagem of personagens) {
-    console.log(personagem.descricao());
-    console.log('---------------------');
+    console.log(personagem.descricao())
+    console.log('---------------------')
 
     if (personagem.velocidade > maisRapido.velocidade) {
-        maisRapido = personagem;
+        maisRapido = personagem
     }
 
     if (personagem.forca > maisForte.forca) {
-        maisForte = personagem;
+        maisForte = personagem
     }
 
     if (personagem.resistencia > maisResistente.resistencia) {
-        maisResistente = personagem;
+        maisResistente = personagem
     }
+
+    if (overal(personagem) > maisPontosTotais){
+        maisPontosTotais = overal(personagem)
+        nomeOveral = personagem.nome
+    }
+
 }
 
 function exibirCampeao(titulo, personagem, atributo) {
-    console.log(` O personagem com a maior ${titulo} é ${personagem.nome}, com incríveis ${personagem[atributo]} de ${titulo}`);
+    console.log(` O personagem com a maior ${titulo} é ${personagem.nome}, com incríveis ${personagem[atributo]} de ${titulo}`)
 }
 
+function overal(personagem){
+    return personagem.velocidade + personagem.forca + personagem.resistencia
+}
 
-console.log("\n=====================================");
-exibirCampeao("força", maisForte, "forca");
-exibirCampeao("velocidade", maisRapido, "velocidade");
-exibirCampeao("resistência", maisResistente, "resistencia");
+console.log("\n=====================================")
+exibirCampeao("força", maisForte, "forca")
+exibirCampeao("velocidade", maisRapido, "velocidade")
+exibirCampeao("resistência", maisResistente, "resistencia")
+
+console.log('------------------------------------------')
+console.log(`O personagem que tem o maior overal é ${nomeOveral}, com ${maisPontosTotais}`)
 
 
-
-
+//console.log(overal(capitaoAmerica))
