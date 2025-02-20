@@ -96,7 +96,7 @@ const hulk = {
 
 const thor = {
     nome: 'Thor',
-    codinome: '',
+    codinome: 'Thor', 
     armaPrincipal: 'Mjonir',
     armaSecundaria: 'Raios e trovões',
     velocidade: 90,
@@ -153,7 +153,7 @@ const gaviaoArqueiro = {
 
 const thanos = {
     nome: 'Thanos',
-    codinome: '',
+    codinome: 'Thanos', 
     armaPrincipal: 'Manopola com joía do poder',
     armaSecundaria: '',
     velocidade: 40,
@@ -170,76 +170,63 @@ const thanos = {
     }
 }
 
-
-// Todos os personagens deverão ser colocados em um Array.
-// Noseuprojeto, desenvolva um código que faça a comparação entre
-// cada personagem, ou seja, seus atributos. Utilize estruturas de
-// repetição (ex: for) para percorrer cada elemento do Array e fazer a
-// comparação.
-// Por fim, seu projeto deve imprimir a descrição de cada personagem
-// que esta sendo comparado e também apontar onde um personagem
-// “vence” (possui um valor maior no atributo numérico)
-
-
-
-
-
 const personagens = [capitaoAmerica, homemAranha, doutorEstranho, viuvaNegra, gaviaoArqueiro, hulk, homemDeFerro, thor, thanos]
 
+function compararPersonagens(p1, p2) {
+    const atributos = ['forca', 'velocidade', 'resistencia']
+    let p1Vitoria = 0
+    let p2Vitoria = 0
+    let vitoriaP1 = []
+    let vitoriaP2 = []
 
+    atributos.forEach(atributo => {
+        if (p1[atributo] > p2[atributo]) {
+            p1Vitoria++
+            vitoriaP1.push(atributo)
+        } else if (p1[atributo] < p2[atributo]) {
+            p2Vitoria++
+            vitoriaP2.push(atributo)
+        }
+    });
 
-let maisRapido = personagens[0]
-let maisForte = personagens[0]
-let maisResistente = personagens[0]
-let nomeOveral = ''
-let maisPontosTotais = 0
-
-// for(let x in personagens){
-//     maisRapido = personagens[x].nome
-//     console.log(maisRapido)
-// }
-// personagens = [obj1,obj2,obj3]
-// x = 0 in personagens[obj1]
-
-
-for (const personagem of personagens) {
-    console.log(personagem.descricao())
-    console.log('---------------------')
-
-    if (personagem.velocidade > maisRapido.velocidade) {
-        maisRapido = personagem
+    let resultado = ''
+    if (p1Vitoria > p2Vitoria) {
+        resultado = `${p1.codinome} vence a luta!`
+    } else if (p1Vitoria < p2Vitoria) {
+        resultado = `${p2.codinome} vence a luta!`
+    } else {
+        resultado = 'Empate!'
     }
 
-    if (personagem.forca > maisForte.forca) {
-        maisForte = personagem
-    }
-
-    if (personagem.resistencia > maisResistente.resistencia) {
-        maisResistente = personagem
-    }
-
-    if (overal(personagem) > maisPontosTotais){
-        maisPontosTotais = overal(personagem)
-        nomeOveral = personagem.nome
-    }
-
+    return {
+        resultado,
+        vitoriaP1,
+        vitoriaP2
+    };
 }
 
-function exibirCampeao(titulo, personagem, atributo) {
-    console.log(` O personagem com a maior ${titulo} é ${personagem.nome}, com incríveis ${personagem[atributo]} de ${titulo}`)
+function exibirECompararPersonagens(personagens) {
+    for (let i = 0; i < personagens.length; i++) {
+        for (let j = i + 1; j < personagens.length; j++) {
+            console.log(`\nComparando ${personagens[i].codinome} e ${personagens[j].codinome}:`)
+            console.log(personagens[i].descricao())
+            console.log('---------------------------------')
+            console.log(personagens[j].descricao())
+            console.log('---------------------------------')
+
+            const { resultado, vitoriaP1, vitoriaP2 } = compararPersonagens(personagens[i], personagens[j])
+            console.log('Resultado: ' + resultado)
+            if (vitoriaP1.length > 0) {
+                console.log(`${personagens[i].codinome} venceu nos atributos: ${vitoriaP1.join(', ')}`)
+            }
+            if (vitoriaP2.length > 0) {
+                console.log(`${personagens[j].codinome} venceu nos atributos: ${vitoriaP2.join(', ')}`)
+            }
+            console.log('=================================')
+        }
+    }
 }
 
-function overal(personagem){
-    return personagem.velocidade + personagem.forca + personagem.resistencia
-}
+exibirECompararPersonagens(personagens)
 
-console.log("\n=====================================")
-exibirCampeao("força", maisForte, "forca")
-exibirCampeao("velocidade", maisRapido, "velocidade")
-exibirCampeao("resistência", maisResistente, "resistencia")
-
-console.log('------------------------------------------')
-console.log(`O personagem que tem o maior overal é ${nomeOveral}, com ${maisPontosTotais}`)
-
-
-//console.log(overal(capitaoAmerica))
+           
