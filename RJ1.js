@@ -169,17 +169,39 @@ const thanos = {
             "Nível de resistencia: " + this.resistencia
     }
 }
-
+// uma lista constante com todos os personagens
+// constante por ser imutavel
 const personagens = [capitaoAmerica, homemAranha, doutorEstranho, viuvaNegra, gaviaoArqueiro, hulk, homemDeFerro, thor, thanos]
 
+// uma funcao para comparar dois personagens
 function compararPersonagens(p1, p2) {
+
+    //lista constante de atributos para facilitar no for
     const atributos = ['forca', 'velocidade', 'resistencia']
+
+    // variaveis temporarias para marcar quem venceu em cada atributo
     let p1Vitoria = 0
     let p2Vitoria = 0
+
+    // variavel temporaria para saber em qual atributo houve a vitoria
     let vitoriaP1 = []
     let vitoriaP2 = []
 
+    // forEach é um metodo propio do js que intera para cada elemento de uma lista{array} 
+    // passando como parametro uma funcao ou uma variavel
+    // aqui no caso, para cada elemento da lista constante "atributos", a variavel "atributo" 
+    // sera atribuida ao valor correspondente da lista
+    // ex: let lista = ['goiaba', 'pera', 'maca']
+    // lista.forEach(fruta => {})
+    // na primeira passagem do for, ele vai executar atribuindo a variavel "fruta" ao index 0 da lista
+
     atributos.forEach(atributo => {
+      //abstracao: 
+      // se personagem1(parametro passado no inicio da funcao)[atributo](*valor do index atual = forca*)
+      // for maior que forca p2
+      // adiciona 1 ponto de vitoria ao p1
+      // adiciona na lista de vitorias qual atributo deu a vitoria
+      // caso contrario, faz o contrario kkkk
         if (p1[atributo] > p2[atributo]) {
             p1Vitoria++
             vitoriaP1.push(atributo)
@@ -189,7 +211,14 @@ function compararPersonagens(p1, p2) {
         }
     });
 
+    // criei uma variavel local para armazenar quem vence a luta
     let resultado = ''
+    
+    // abstracao:
+    // se vitorias do personagem1 for maior
+    // adiciona o nome de heroi mostrando que ele venceu
+    // caso contrario, dar a vitoria ao outro
+    // em caso de empate, resultado = 'empate'
     if (p1Vitoria > p2Vitoria) {
         resultado = `${p1.codinome} vence a luta!`
     } else if (p1Vitoria < p2Vitoria) {
@@ -198,6 +227,8 @@ function compararPersonagens(p1, p2) {
         resultado = 'Empate!'
     }
 
+
+    // retornar o resultado de quem ganhou, e os atributos maiores
     return {
         resultado,
         vitoriaP1,
@@ -205,17 +236,45 @@ function compararPersonagens(p1, p2) {
     };
 }
 
+
+// funcao que vai comparar os personagens, de forma que não repita a luta
+// odio profundo ao arakaki e suas aulas de contagem
+// como tem uma lista com 10 itens, ou seja, de 0-9 index
+// o index 0 lutará com todos os outros (de 1-9)
+// o index 1 lutará com todos os consecutivos (de 2-9)
+// até chegar no 9, onde terá lutado com todos
 function exibirECompararPersonagens(personagens) {
     for (let i = 0; i < personagens.length; i++) {
         for (let j = i + 1; j < personagens.length; j++) {
+          // acho que dois for seria o ideal por causa de precisar de duas variaveis, uma para o
+          // p1 e outra para o p2
+
             console.log(`\nComparando ${personagens[i].codinome} e ${personagens[j].codinome}:`)
             console.log(personagens[i].descricao())
             console.log('---------------------------------')
             console.log(personagens[j].descricao())
             console.log('---------------------------------')
 
+            // desestruturação:
+            // tomei um susto quando vi esse conceito, mas é resumindo, adicionar a uma variavel
+            // retornada por um metodo os seus valores
+            // um exemplo meio bobo mas para fixação
+            //function frutasGostosas(listaDeFrutasQueSaoObjetos){
+            //  se na listaDeFrutasQueSaoObjetos tiver maça{
+            //  return {
+            //    nomeFruta,
+            //    pesoFruta,
+            //    nivelDeGostosura
+            //    }
+            //  }
+            //}
+            //a desestruturação seria pegar esse return "multiplo "e adicionar a variaveis para manipulaçã<object data=",," type=""></object>
+            // const {nomeFruta, pesoFruta, nivelDeGostosura} = frutasGostosas(parametros)
+
             const { resultado, vitoriaP1, vitoriaP2 } = compararPersonagens(personagens[i], personagens[j])
             console.log('Resultado: ' + resultado)
+
+            // esses dois ifs sao para imprimir quais atributos foram guardados como vitoria
             if (vitoriaP1.length > 0) {
                 console.log(`${personagens[i].codinome} venceu nos atributos: ${vitoriaP1.join(', ')}`)
             }
@@ -223,6 +282,8 @@ function exibirECompararPersonagens(personagens) {
                 console.log(`${personagens[j].codinome} venceu nos atributos: ${vitoriaP2.join(', ')}`)
             }
             console.log('=================================')
+            console.log('')
+            console.log('')
         }
     }
 }
